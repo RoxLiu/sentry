@@ -66,6 +66,17 @@ class FixedTypeaheadInput(forms.TextInput):
         self.attrs['class'] = self.attrs.get('class', '') + ' typeahead'
 
 
+class EventAttributeFormFields:
+    attribute = {
+        'placeholder': 'i.e. exception.type',
+        'type': 'choice',
+        'choices': [{
+                'id': a,
+                'text': a
+        } for a in ATTR_CHOICES],
+    }
+
+
 class EventAttributeForm(forms.Form):
     attribute = forms.CharField(
         widget=FixedTypeaheadInput(
@@ -106,6 +117,16 @@ class EventAttributeCondition(EventCondition):
     # TODO(dcramer): add support for stacktrace.vars.[name]
 
     form_cls = EventAttributeForm
+
+    form_field = EventAttributeFormFields
+
+    form_fields = {
+        'attribute': {
+            'placeholder': 'i.e. exception.type',
+            'choices': [{'id': a, 'text': a} for a in ATTR_CHOICES]
+        }
+    }
+
     label = u'An event\'s {attribute} value {match} {value}'
 
     def _get_attribute_values(self, event, attr):

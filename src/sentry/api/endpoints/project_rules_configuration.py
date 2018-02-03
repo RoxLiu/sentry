@@ -26,6 +26,9 @@ class ProjectRulesConfigurationEndpoint(ProjectEndpoint):
                 'html': node.render_form(),
             }
 
+            if hasattr(node, 'form_fields'):
+                context['formFields'] = node.form_fields
+
             if not node.is_enabled():
                 continue
 

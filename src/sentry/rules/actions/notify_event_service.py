@@ -30,6 +30,12 @@ class NotifyEventServiceForm(forms.Form):
 
 class NotifyEventServiceAction(EventAction):
     form_cls = NotifyEventServiceForm
+    form_fields = {
+        'service': {
+            'type': 'choice',
+            'choices': [['mail', 'mail'], ['slack', 'slack']]
+        }
+    }
     label = 'Send a notification via {service}'
 
     def after(self, event, state):
